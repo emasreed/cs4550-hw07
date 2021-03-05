@@ -17,4 +17,4 @@ fi
 
 echo "Starting app..."
 
-_build/prod/rel/hw06/bin/hw06 start
+_build/prod/rel/events_hw/bin/events_hw start

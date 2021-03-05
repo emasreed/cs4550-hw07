@@ -15,6 +15,9 @@ mix local.rebar --force
 mix deps.get
 mix compile
 
+mix ecto.create
+mix ecto.migrate
+
 # Setup secret config file.
 # From lecture notes
 # https://github.com/NatTuck/scratch-2021-01/blob/master/4550/0212/hangman/deploy.sh
@@ -30,6 +33,7 @@ fi
 
 SECRET_KEY_BASE=$(cat "$CFGD/base")
 export SECRET_KEY_BASE
+
 
 (cd assets && npm install)
 (cd assets && webpack --mode production)
