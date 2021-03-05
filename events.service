@@ -1,0 +1,18 @@
+[Unit]
+Description=Events - Emma Reed
+
+[Service]
+Type=simple
+User=hw07
+Group=www-data
+Restart=on-failure
+Environment=MIX_ENV=prod
+Environment=PORT=4796
+Environment=PROD=true
+Environment=LANG=en_US.UTF-8
+
+WorkingDirectory=/home/hw05/cs4550-hw07/events_hw
+ExecStart=/bin/bash /home/hw07/cs4550-hw07/events_hw/start.sh
+
+[Install]
+WantedBy=multi-user.target
