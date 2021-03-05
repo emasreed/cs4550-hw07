@@ -22,3 +22,5 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
 ## Attribution
 Based on Code from https://github.com/NatTuck/scratch-2021-01
 and https://github.com/NatTuck/photo_blog
+
+Used flatpickr library for dates and used code from examples.
