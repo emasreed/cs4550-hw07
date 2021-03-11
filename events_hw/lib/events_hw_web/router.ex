@@ -18,9 +18,11 @@ defmodule EventsHwWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    get "/posts/photo/:id", UserController, :photo
     resources "/users", UserController
     resources "/sessions", SessionController, only: [:create, :delete], singleton: true
     resources "/events", EventController
+    resources "/invites", InviteController
   end
 
   # Other scopes may use custom stacks.

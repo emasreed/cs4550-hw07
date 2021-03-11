@@ -19,5 +19,48 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>User Icon</th>
+      <th>User Name</th>
+      <th>User Email</th>
+      <th>Response</th>
+      <th>Comments</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for invite <- @invites do %>
+    <tr>
+      <td><div><img src="<%= Routes.user_path(@conn, :photo, invite.user) %>" alt="" style="height: 50px"></div></td>
+      <td><%= invite.user.name%>
+      <td><%= invite.user.email%>
+      <td><%= invite.response %></td>
+      <td><%= invite.comment %></td>
+      <td>
+        <%= if current_user_id?(@conn, invite.user_id) do %>
+          <span><%= link "Edit", to: Routes.invite_path(@conn, :edit, invite) %></span>
+        <% end %>
+        <%= if current_user_id?(@conn, @event.user_id) do %>
+          <span><%= link "Remove Comment", to: Routes.invite_path(@conn, :delete, invite), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <% end %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= if current_user_id?(@conn, @event.user_id) do %>
+    <%= form_for @conn, Routes.invite_path(@conn, :create), fn f -> %>
+        <%= label f, :email %>
+        <%= text_input f, :email %>
+        <%= error_tag f, :email %>
+        <%= hidden_input f, :event, value: @event.id %>
+        <%= submit "Invite" %>
+    <% end %>
+    <span><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span>
+<% end %>
 <span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>

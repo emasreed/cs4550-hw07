@@ -3,6 +3,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
+      <th>Event Owner</th>
       <th>Name</th>
       <th>Description</th>
       <th>Date time</th>
@@ -13,17 +14,22 @@
   <tbody>
 <%= for event <- @events do %>
     <tr>
+      <td><%= event.user.name %></td>
       <td><%= event.name %></td>
       <td><%= event.description %></td>
       <td><%= event.date_time %></td>
 
       <td>
         <span><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
-        <span><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
+        <%= if current_user_id?(@conn, event.user_id) do %>
+          <span><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
+        <% end %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
 
-<span><%= link "New Event", to: Routes.event_path(@conn, :new), role: "button", class: "btn btn-primary"  %></span>
+<%= if have_current_user?(@conn) do %>
+  <span><%= link "New Event", to: Routes.event_path(@conn, :new), role: "button", class: "btn btn-primary"  %></span>
+<% end %>

@@ -5,6 +5,7 @@ defmodule EventsHw.Events do
 
   import Ecto.Query, warn: false
   alias EventsHw.Repo
+  alias EventsHw.Invite
 
   alias EventsHw.Events.Event
 
@@ -19,6 +20,7 @@ defmodule EventsHw.Events do
   """
   def list_events do
     Repo.all(Event)
+    |> Repo.preload(:user)
   end
 
   @doc """
@@ -36,6 +38,11 @@ defmodule EventsHw.Events do
 
   """
   def get_event!(id), do: Repo.get!(Event, id)
+
+  def get_invites(id) do
+    Repo.all(from(EventsHw.Invites.Invite, where: [event_id: ^id]))
+    |> Repo.preload(:user)
+  end
 
   @doc """
   Creates a event.
@@ -101,4 +108,5 @@ defmodule EventsHw.Events do
   def change_event(%Event{} = event, attrs \\ %{}) do
     Event.changeset(event, attrs)
   end
+
 end
