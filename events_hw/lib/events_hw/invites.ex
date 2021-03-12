@@ -28,6 +28,12 @@ defmodule EventsHw.Invites do
 
   end
 
+  def is_invited(event_id, user_id) do
+    query = from i in "invites",
+              where: i.event_id == ^event_id and i.user_id == ^user_id
+    Repo.exists?(query)
+  end
+
   @doc """
   Gets a single invite.
 

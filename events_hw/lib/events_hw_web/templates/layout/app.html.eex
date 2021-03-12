@@ -23,9 +23,9 @@
               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <%= link "My Events", to: Routes.event_path(@conn, :index), class: "nav-link" %>
+              <%= link "Events", to: Routes.event_path(@conn, :index), class: "nav-link" %>
             </li>
-            <li class="nav-item dropdown my-2 my-lg-0">
+            <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Current User: <%= @current_user.name %>
               </a>
@@ -50,15 +50,7 @@
               <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Dropdown
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">Disabled</a>
+              <%= link "Events", to: Routes.event_path(@conn, :index), class: "nav-link" %>
             </li>
           </ul>
             <%= form_for @conn, Routes.session_path(@conn, :create),
@@ -66,36 +58,10 @@
               <%= text_input f, :email, class: "form-control mr-sm-2" %>
               <%= submit "Login", class: "btn btn-outline-success my-2 my-sm-0" %>
             <% end %>
+            <%= link "Register", to: Routes.user_path(@conn, :new), role: "button", class: "btn btn-secondary" %>
         </div>
       </nav>
     <% end %>
-      <div class="row">
-        <div class="col my-2">
-        <h1><%= link "Events App", to: Routes.page_path(@conn, :index) %></h1>
-        </div>
-        <%= if @conn.assigns[:current_user] do %>
-          <div class="col my-2">
-            <%= link "My Events", to: Routes.event_path(@conn, :index)%>
-          </div>
-          <div class="col my-2">
-            User: <%= @current_user.name %> |
-            <%= link("Logout", to: Routes.session_path(@conn, :delete),
-              method: :delete) %> |
-            <%= link("Edit Profile", to: Routes.user_path(@conn, :edit, @current_user)) %>
-          </div>
-        <% else %>
-          <div class="col my-2">
-            <%= form_for @conn, Routes.session_path(@conn, :create),
-            [class: "form-inline"], fn f -> %>
-              <%= text_input f, :email, class: "form-control" %>
-              <%= submit "Login", class: "btn btn-secondary" %>
-            <% end %>
-          </div>
-          <div class="col my-2">
-            <%= link "Register", to: Routes.user_path(@conn, :new), role: "button", class: "btn btn-secondary" %>
-          </div>
-        <% end %>
-      </div>
 
       <%= if get_flash(@conn, :info) do %>
         <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>

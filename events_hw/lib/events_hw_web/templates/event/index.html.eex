@@ -1,31 +1,49 @@
 <h1>Events</h1>
-
+<%= if not have_current_user?(@conn) do %>
+  <p>Make sure you are logged in to view event information</p>
+<% end %>
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Event Owner</th>
+      <th>Event Owner Name</th>
       <th>Name</th>
       <th>Description</th>
       <th>Date time</th>
+      <%= if have_current_user?(@conn) do %>
+        <th>Actions</th>
+      <% end %>
 
       <th></th>
     </tr>
   </thead>
   <tbody>
 <%= for event <- @events do %>
-    <tr>
-      <td><%= event.user.name %></td>
-      <td><%= event.name %></td>
-      <td><%= event.description %></td>
-      <td><%= event.date_time %></td>
-
-      <td>
-        <span><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
-        <%= if current_user_id?(@conn, event.user_id) do %>
-          <span><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
-        <% end %>
-      </td>
-    </tr>
+    <%= if invited?(@conn, event.id, event.user_id) do %>
+      <tr>
+        <td><div><img src="<%= Routes.user_path(@conn, :photo, event.user) %>" alt="" style="height: 50px"></div></td>
+        <td><%= event.user.name %></td>
+        <td><%= event.name %></td>
+        <td><%= event.description %></td>
+        <td><%= event.date_time %></td>
+        <td>
+          <%= if have_current_user?(@conn) do %>
+            <span><%= link "Show", to: Routes.event_path(@conn, :show, event) %></span>
+          <% end %>
+          <%= if current_user_id?(@conn, event.user_id) do %>
+            <span><%= link "Edit", to: Routes.event_path(@conn, :edit, event) %></span>
+          <% end %>
+        </td>
+      </tr>
+    <% else %>
+      <tr>
+        <td><div><img src="<%= Routes.user_path(@conn, :photo, event.user) %>" alt="" style="height: 50px"></div></td>
+        <td><%= event.user.name %></td>
+        <td><%= event.name %></td>
+        <td><p>Private for Invitees</p></td>
+        <td><p>Private for Invitees</p></td>
+      </tr>
+    <% end %>
 <% end %>
   </tbody>
 </table>

@@ -1,11 +1,18 @@
 <div class="row">
-  <div class="col">
-    Hello, World
-  </div>
-  <div class="col">
-    <span><%= link "Events", to: Routes.event_path(@conn, :index) %></span>
-  </div>
-  <div class="col">
-    <span><%= link "Users", to: Routes.user_path(@conn, :index) %></span>
-  </div>
+  <h2>Welcome to Events App!</h2>
 </div>
+<%= if have_current_user?(@conn) do %>
+  <div class="row">
+    <p>To view, create, and edit events go to the events page on the Navigation Bar.</p>
+  </div>
+  <div class="row">
+    <p>To log out or edit your user profile, use the dropdown on the navigation bar.</p>
+  </div>
+<% else %>
+  <div class="row">
+    <p>If you were given an event link, then login with the email you recieved the invite from.</p>
+  </div>
+  <div class="row">
+    <p>If you want to create a new event, register a new account to start creating invited.<p>
+  </div>
+<% end %>

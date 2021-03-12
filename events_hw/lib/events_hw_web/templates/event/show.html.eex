@@ -43,6 +43,7 @@
       <td>
         <%= if current_user_id?(@conn, invite.user_id) do %>
           <span><%= link "Edit", to: Routes.invite_path(@conn, :edit, invite) %></span>
+          <span><%= link "Remove Comment", to: Routes.invite_path(@conn, :delete, invite), method: :delete, data: [confirm: "Are you sure?"] %></span>
         <% end %>
         <%= if current_user_id?(@conn, @event.user_id) do %>
           <span><%= link "Remove Comment", to: Routes.invite_path(@conn, :delete, invite), method: :delete, data: [confirm: "Are you sure?"] %></span>
